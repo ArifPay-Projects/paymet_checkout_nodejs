@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Booking Page</title>
+    <script src="http://localhost:3000/socket.io/socket.io.js" defer></script>
+    <script src="js/index.js" defer></script>
+  </head>
+  <body>
+    <ul id="sessions"></ul>
+    <div id="message-container"></div>
+    <h1>Book Room</h1>
+    <form id="form">
+      <label for="input">Email: </label>
+      <input type="email" id="input" />
+      <button type="submit" id="submit">Book Room</button>
+    </form>
+  </body>
+</html>
