@@ -1,12 +1,10 @@
-
 const express = require("express");
 const app = express();
+const httpServer = require('node:http').createServer(app);
 
-//const hostname = '192.168.0.100';
+const PORT = process.env.PORT || 3000;
 
-const server = require("http").createServer(app);
-
-const io = require("socket.io")(server, {
+const io = require("socket.io")(httpServer, {
   cors: {
     origin: "http://localhost:3000",
   },
@@ -17,33 +15,37 @@ app.use(express.json());
 app.use(express.static("public"));
 app.use(express.urlencoded({ extended: true }))
 
+const router = express.Router();
 
-// Making the connection ready
-io.on("connection", (socket) => {
-  // recieve a message from a client
-  socket.on("book room", email => {
-    const id = socket.id;
-    console.log("Connected email: ", email);
-    console.log("Socket ID: ", id);
-    
-    // respond to the event
-    socket.emit("book room", email); 
+//add router in express app
+app.use("/", router);
 
-    // display
-    app.get('/webhook', (req, res) => {
-      var data = [
-        {email: email},
-        {id: id}
-      ]
-      res.send(data);
-    })
-  
+router.post('/', (req, res) => {
+  email = req.body.email
+  console.log(email);
+});
+
+// io.on('connection', (socket) => {
+//   socket.on('msgServer', (userId) => {
+//     socket.join(userId);
+//   });
+// });
+
+// app.post('/notify', (req, res) => {
+//   io.to(req.body.userId).emit('notification', { message: 'You have a new notification' });
+// });
+
+
+  io.on("connection", (socket) => {
+    console.log(socket.id ,"has joined");
   });
+
+router.post('/notify', (req, res)=>{
+  io.emit("msgServer", "from nodejs Successfully paid");
+  
 });
 
-//hostname,
-server.listen(3000, () => {
-  console.log("Server is listening at port 3000 ...");
+
+httpServer.listen(PORT, "127.0.0.1", () => {
+  console.log(`Server is listening at port ${PORT} ...`);
 });
-
-

@@ -1,6 +1,7 @@
-
-const URL = 'http://localhost:3000'
+const URL = 'http://localhost:3000/user'
 const socket = io(URL);
+//const express = require ("express");
+//const app = express();
 
       var form = document.getElementById("form");
       var input = document.getElementById("input");
@@ -8,12 +9,19 @@ const socket = io(URL);
       form.addEventListener('submit', function (e) {
         e.preventDefault();
         const email = input.value;
-        if (email) {
+        //if (email) {
+          // app.get('/', (req, res) => {
+          //   var data = [
+          //     {email: email},
+          //   ]
+          //   res.send(data);
+          // });
            // message to the server
-          socket.emit("book room", email);
-          input.value = "";
-        }
-        window.location = '../index.html';
+          // socket.emit("book room", email);
+          // input.value = "";
+          //console.log(msg);
+        //}
+        //window.location = '../index.html';
       });
   
       /*
@@ -27,7 +35,3 @@ const socket = io(URL);
         window.scrollTo(0, document.body.scrollHeight);
       });
 */
-
-
-
-
